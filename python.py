@@ -79,3 +79,18 @@ cn=confusion_matrix(y_test,y_pred)
 
 from sklearn.metrics import accuracy_score
 accuracy=accuracy_score(y_test,y_pred)
+
+model.save("nlpmodel.h5")
+from keras.models import load_model
+import numpy as np
+import pickle
+model=load_model("nlpmodel.h5")
+with open('CountVectorizer','rb')as file:
+    cv=pickle.load(file)
+    entered_input="the book is very nice"
+    inp=cv.transform([entered_input])
+    y_pred=model.predict(inp)
+    if(y_pred>0.5):
+        print("it is a positive review")
+    else:
+        print("it is a negative review")
